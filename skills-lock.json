@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "extract-design-system": {
+      "source": "arvindrk/extract-design-system",
+      "sourceType": "github",
+      "computedHash": "edf87c9199cabc13ea93ffcdc8702522dc2f939b0cb6b3d778554d4dfaa90d05"
+    }
+  }
+}

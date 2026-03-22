@@ -1,7 +1,7 @@
 {
   "name": "extract-design-system",
   "version": "0.1.1",
-  "description": "Extract design primitives from public websites and generate starter token files.",
+  "description": "CLI for extracting design primitives from public websites and generating starter token files for the extract-design-system agent skill workflow.",
   "type": "module",
   "bin": {
     "extract-design-system": "dist/cli.js"
@@ -23,11 +23,24 @@
   },
   "keywords": [
     "design-system",
+    "design-system-extraction",
     "design-tokens",
+    "agent-skill",
+    "skills.sh",
     "skills",
     "cli",
+    "cursor",
+    "codex",
     "dembrandt"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arvindrk/extract-design-system.git"
+  },
+  "homepage": "https://github.com/arvindrk/extract-design-system#readme",
+  "bugs": {
+    "url": "https://github.com/arvindrk/extract-design-system/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "commander": "^14.0.1",
