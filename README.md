@@ -38,7 +38,7 @@ npm install
 npm run typecheck
 npm test
 npm run build
-node dist/src/cli.js --help
+node dist/cli.js --help
 ```
 
 ## Notes
