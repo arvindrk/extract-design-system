@@ -1,6 +1,6 @@
 {
   "name": "extract-design-system",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "CLI for extracting design primitives from public websites and generating starter token files for the extract-design-system agent skill workflow.",
   "type": "module",
   "bin": {
