@@ -1,0 +1,4 @@
+node_modules/
+dist/
+.extract-design-system/
+design-system/
