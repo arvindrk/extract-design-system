@@ -1,79 +1,101 @@
 # extract-design-system
 
-`extract-design-system` is a GitHub-hosted agent skill plus an npm CLI for extracting design primitives from public websites and generating starter token files for a local project.
+A collection of agent skill instructions and a companion npm CLI for extracting design primitives from public websites and generating starter token files.
 
-## Two Ways To Use It
+Skills follow the [Agent Skills](https://agentskills.io/) format and are installable through the [skills](https://skills.sh/) ecosystem.
 
-### Install The Skill
+## Available Skills
 
-Use the GitHub-hosted skill when you want your coding agent to know the workflow and safety boundaries:
+### extract-design-system
+
+Extract a starter design system from a public website and turn it into project-local token files.
+
+**Use when:**
+- You want an agent to analyze a public website's colors, typography, spacing, and related primitives
+- You want starter token files for a local project
+- You want a safer, repeatable workflow instead of manually prompting an agent through extraction steps
+- You want a workflow similar in spirit to foundational skills like brainstorming, but focused on design-system extraction and initialization
+
+**What it does:**
+- Installs a GitHub-hosted skill that teaches agents when and how to run the workflow
+- Wraps `dembrandt` through the `extract-design-system` CLI
+- Saves raw extraction output to `.extract-design-system/raw.json`
+- Normalizes extracted data into `.extract-design-system/normalized.json`
+- Generates `design-system/tokens.json`
+- Generates `design-system/tokens.css`
+
+**Current limitations:**
+- Public websites only
+- Single-page extraction workflow
+- Starter tokens, not a full component library
+- No framework config patching or automatic app rewrites
+
+## Installation
+
+Install the skill from GitHub with the `skills` CLI:
 
 ```bash
 npx skills add arvindrk/extract-design-system --skill extract-design-system
 ```
 
-This is the install path that `skills.sh` discovers and ranks.
+This is the installation path used by `skills.sh` discovery and ranking.
 
-### Run The CLI Directly
+## Usage
 
-Use the npm package when you want to execute the extraction and token-generation commands yourself:
+Once installed, the skill is available to supported coding agents. The agent should use it when a request matches the extraction workflow.
 
-```bash
-npx extract-design-system --help
+**Example prompts:**
+
+```text
+Extract the design system from https://stripe.com and generate starter token files for this project.
 ```
 
-Many users will use both: install the skill for the agent, then let the skill invoke the CLI.
+```text
+Analyze https://linear.app and summarize the design primitives before generating local tokens.
+```
 
-## Recommended Workflow
+The skill is designed to:
+- confirm the target website
+- set expectations about scope and limitations
+- run extraction through the CLI
+- summarize what was found
+- ask before modifying existing project styling or configuration
+
+## CLI Workflow
+
+The skill relies on the published npm CLI:
 
 ```bash
-npx skills add arvindrk/extract-design-system --skill extract-design-system
 npx playwright install chromium
 npx extract-design-system extract https://example.com
 npx extract-design-system init
 ```
 
 What each step does:
-- installs the agent skill from GitHub
 - installs the Playwright browser dependency used by extraction
 - extracts design primitives from the target website
 - generates starter token files in the current project
 
-## What V1 Does
+You can also inspect the CLI directly:
 
-- provides a public agent skill that teaches when and how to run the workflow safely
-- wraps `dembrandt` for website extraction
-- saves raw extraction output to `.extract-design-system/raw.json`
-- normalizes extracted design data into `.extract-design-system/normalized.json`
-- generates `design-system/tokens.json`
-- generates `design-system/tokens.css`
-
-## What V1 Does Not Do
-
-- patch your framework config
-- generate components
-- crawl multiple pages
-- overwrite an existing design system automatically
+```bash
+npx extract-design-system --help
+```
 
 ## Generated Outputs
 
-- `.extract-design-system/raw.json`: raw extractor output for debugging and future compatibility
-- `.extract-design-system/normalized.json`: stable normalized representation used by the CLI
-- `design-system/tokens.json`: project-local JSON copy of the normalized design system
-- `design-system/tokens.css`: starter CSS variables file for immediate integration
+- `.extract-design-system/raw.json` - Raw extractor output for debugging and future compatibility
+- `.extract-design-system/normalized.json` - Stable normalized representation used by the CLI
+- `design-system/tokens.json` - Project-local JSON copy of the normalized design system
+- `design-system/tokens.css` - Starter CSS variables file for immediate integration
 
-## How It Works
+## Skill Structure
 
-- the GitHub repo exposes `skills/extract-design-system/SKILL.md` for agent installation through the `skills` ecosystem
-- the npm package exposes the `extract-design-system` CLI
-- the CLI wraps `dembrandt`, normalizes the results, and writes starter token artifacts
+This repository currently exposes:
+- `skills/extract-design-system/SKILL.md` - Main skill instructions
+- `skills/extract-design-system/references/` - Supporting workflow and output references
 
-## Limitations
-
-- works on public websites only
-- extracts starter-level primitives, not a full component library
-- does not guarantee pixel-perfect reproduction
-- a single page is not proof of a complete product design system
+The npm package exposes the `extract-design-system` CLI that the skill invokes.
 
 ## Local Development
 
@@ -87,7 +109,11 @@ node dist/cli.js --help
 
 ## Notes
 
-- Node.js 20+ is required.
-- `dembrandt` requires a Playwright browser binary. If extraction fails because Chromium is missing, run `npx playwright install chromium`.
-- Extraction quality depends on the target site's DOM and CSS exposure.
-- Dynamic or protected sites may yield incomplete results.
+- Node.js 20+ is required
+- If extraction fails because Chromium is missing, run `npx playwright install chromium`
+- Extraction quality depends on the target site's DOM and CSS exposure
+- Dynamic or protected sites may yield incomplete results
+
+## License
+
+MIT
