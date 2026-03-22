@@ -1,6 +1,7 @@
 #!/usr/bin/env node
+import { realpathSync } from "node:fs";
 import { Command } from "commander";
-import { pathToFileURL } from "node:url";
+import { fileURLToPath } from "node:url";
 import { extractCommand } from "./commands/extract.js";
 import { initCommand } from "./commands/init.js";
 
@@ -42,8 +43,21 @@ async function run(): Promise<void> {
 }
 
 const entrypoint = process.argv[1];
+const cliFilePath = fileURLToPath(import.meta.url);
 
-if (entrypoint && import.meta.url === pathToFileURL(entrypoint).href) {
+function wasInvokedDirectly(): boolean {
+  if (!entrypoint) {
+    return false;
+  }
+
+  try {
+    return realpathSync(entrypoint) === realpathSync(cliFilePath);
+  } catch {
+    return false;
+  }
+}
+
+if (wasInvokedDirectly()) {
   run().catch((error) => {
     console.error(error instanceof Error ? error.message : error);
     process.exitCode = 1;
