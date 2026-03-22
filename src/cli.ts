@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { Command } from "commander";
 import { pathToFileURL } from "node:url";
 import { extractCommand } from "./commands/extract.js";
