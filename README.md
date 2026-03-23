@@ -4,6 +4,11 @@ A collection of agent skill instructions and a companion npm CLI for extracting 
 
 Skills follow the [Agent Skills](https://agentskills.io/) format and are installable through the [skills](https://skills.sh/) ecosystem.
 
+## Links
+
+- npm package: [extract-design-system](https://www.npmjs.com/package/extract-design-system)
+- skills.sh page: [extract-design-system](https://skills.sh/arvindrk/extract-design-system/extract-design-system)
+
 ## Available Skills
 
 ### extract-design-system
