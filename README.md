@@ -1,13 +1,13 @@
+[![npm](https://img.shields.io/badge/npm-package-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/package/extract-design-system)
+[![skills.sh](https://img.shields.io/badge/skills.sh-discovery-111111)](https://skills.sh/arvindrk/extract-design-system/extract-design-system)
+
 # extract-design-system
 
 A collection of agent skill instructions and a companion npm CLI for extracting design primitives from public websites and generating starter token files.
 
-Skills follow the [Agent Skills](https://agentskills.io/) format and are installable through the [skills](https://skills.sh/) ecosystem.
+Skills follow Anthropic's [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and are installable through the [skills.sh](https://skills.sh/) ecosystem.
 
-## Links
-
-[![npm](https://img.shields.io/badge/npm-package-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/package/extract-design-system)
-[![skills.sh](https://img.shields.io/badge/skills.sh-discovery-111111)](https://skills.sh/arvindrk/extract-design-system/extract-design-system)
+Official docs: [quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart), [best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices), [API guide](https://platform.claude.com/docs/en/build-with-claude/skills-guide).
 
 ## Available Skills
 
