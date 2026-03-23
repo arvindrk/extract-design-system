@@ -6,8 +6,8 @@ Skills follow the [Agent Skills](https://agentskills.io/) format and are install
 
 ## Links
 
-- npm package: [extract-design-system](https://www.npmjs.com/package/extract-design-system)
-- skills.sh page: [extract-design-system](https://skills.sh/arvindrk/extract-design-system/extract-design-system)
+[![npm](https://img.shields.io/badge/npm-package-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/package/extract-design-system)
+[![skills.sh](https://img.shields.io/badge/skills.sh-discovery-111111)](https://skills.sh/arvindrk/extract-design-system/extract-design-system)
 
 ## Available Skills
 
