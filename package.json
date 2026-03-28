@@ -17,6 +17,7 @@
   },
   "scripts": {
     "dev": "tsx src/cli.ts",
+    "cli": "node dist/cli.js",
     "build": "rm -rf dist && tsc -p tsconfig.build.json && chmod +x dist/cli.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",

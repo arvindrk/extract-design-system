@@ -111,15 +111,17 @@ npx playwright install chromium
 npm run typecheck
 npm test
 npm run build
-node dist/cli.js --help
+npm run dev -- --help
+npm run cli -- --help
 ```
 
 Useful local commands:
 
 ```bash
-node dist/cli.js https://example.com
-node dist/cli.js https://example.com --extract-only
-node dist/cli.js init
+npm run dev -- https://example.com
+npm run dev -- https://example.com --extract-only
+npm run cli -- https://example.com
+npm run cli -- init
 ```
 
 ## Notes
