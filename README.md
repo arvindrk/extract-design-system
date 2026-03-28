@@ -3,40 +3,42 @@
 
 # extract-design-system
 
-A collection of agent skill instructions and a companion npm CLI for extracting design primitives from public websites and generating starter token files.
+An agent skill for extracting design primitives from public websites and generating starter token files for the current project.
 
 Skills follow Anthropic's [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and are installable through the [skills.sh](https://skills.sh/arvindrk/extract-design-system/extract-design-system) ecosystem.
 
-Official docs: [quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart), [best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices), [API guide](https://platform.claude.com/docs/en/build-with-claude/skills-guide).
+This repository is skills-first. It publishes an installable `extract-design-system` skill, and the bundled CLI is the executable workflow the agent runs under the hood.
 
-## Available Skills
+## About This Repository
+
+This repository contains a focused agent skill for reverse-engineering a starter design system from a public website.
+
+The skill is designed to give coding agents a repeatable workflow for:
+
+- analyzing a public website's colors, typography, spacing, radius, and shadows
+- normalizing the extracted output into a stable structure
+- generating project-local starter token files
+- summarizing findings before broader styling or app changes
+
+## Available Skill
 
 ### extract-design-system
 
-Extract a starter design system from a public website and turn it into project-local token files.
+Extract a starter design system from a public website and turn it into local token files.
 
 **Use when:**
 
-- You want an agent to analyze a public website's colors, typography, spacing, and related primitives
-- You want starter token files for a local project
-- You want a safer, repeatable workflow instead of manually prompting an agent through extraction steps
-- You want a workflow similar in spirit to foundational skills like brainstorming, but focused on design-system extraction and initialization
+- You want an agent to analyze a public website's visual primitives
+- You want starter design tokens for an existing project
+- You want a repeatable workflow instead of ad hoc prompting
+- You want the agent to summarize findings before applying broader changes
 
-**What it does:**
+**What it produces:**
 
-- Installs a skill that teaches agents when and how to run the workflow
-- Wraps `dembrandt` through the `extract-design-system` CLI
-- Saves raw extraction output to `.extract-design-system/raw.json`
-- Normalizes extracted data into `.extract-design-system/normalized.json`
-- Generates `design-system/tokens.json`
-- Generates `design-system/tokens.css`
-
-**Current limitations:**
-
-- Public websites only
-- Single-page extraction workflow
-- Starter tokens, not a full component library
-- No framework config patching or automatic app rewrites
+- `.extract-design-system/raw.json`
+- `.extract-design-system/normalized.json`
+- `design-system/tokens.json`
+- `design-system/tokens.css`
 
 ## Installation
 
@@ -46,7 +48,7 @@ Install the skill from GitHub with the `skills` CLI:
 npx skills add arvindrk/extract-design-system
 ```
 
-This is the installation path used by `skills.sh` discovery and ranking.
+You can also browse the skill on [skills.sh](https://skills.sh/arvindrk/extract-design-system/extract-design-system).
 
 ## Usage
 
@@ -62,60 +64,62 @@ Extract the design system from https://stripe.com and generate starter token fil
 Analyze https://linear.app and summarize the design primitives before generating local tokens.
 ```
 
+```text
+Extract colors, typography, spacing, and radius tokens from https://vercel.com and save them for this codebase.
+```
+
+```text
+Review https://tailwindcss.com, extract the most likely design primitives, and generate starter token files only if the results look usable.
+```
+
+## How The Skill Works
+
 The skill is designed to:
 
-- confirm the target website
+- confirm that the target site is public and reachable
 - set expectations about scope and limitations
-- run extraction through the CLI
-- summarize what was found
-- ask before modifying existing project styling or configuration
+- run the extraction workflow through the bundled CLI
+- summarize what was found in the normalized output
+- generate starter token files for the current project
+- ask before modifying existing app code, styles, or configuration
 
-## CLI Workflow
+## Scope And Limitations
 
-The skill relies on the published npm CLI:
+- Public websites only
+- Single-page extraction workflow
+- Starter tokens, not a full component library
+- No framework config patching or automatic app rewrites
+- Dynamic, protected, or highly script-driven sites may yield incomplete output
+- Extraction is useful for initialization, not pixel-perfect reproduction
 
-```bash
-npx playwright install chromium
-npx extract-design-system extract https://example.com
-npx extract-design-system init
-```
-
-What each step does:
-
-- installs the Playwright browser dependency used by extraction
-- extracts design primitives from the target website
-- generates starter token files in the current project
-
-You can also inspect the CLI directly:
-
-```bash
-npx extract-design-system --help
-```
-
-## Generated Outputs
-
-- `.extract-design-system/raw.json` - Raw extractor output for debugging and future compatibility
-- `.extract-design-system/normalized.json` - Stable normalized representation used by the CLI
-- `design-system/tokens.json` - Project-local JSON copy of the normalized design system
-- `design-system/tokens.css` - Starter CSS variables file for immediate integration
-
-## Skill Structure
+## Repository Structure
 
 This repository currently exposes:
 
 - `skills/extract-design-system/SKILL.md` - Main skill instructions
 - `skills/extract-design-system/references/` - Supporting workflow and output references
-
-The npm package exposes the `extract-design-system` CLI that the skill invokes.
+- `src/` - Bundled CLI implementation used by the skill
+- `tests/` - CLI and normalization test coverage
 
 ## Local Development
 
+The skill's executable workflow is backed by the published npm CLI in this repository.
+
 ```bash
 npm install
+npx playwright install chromium
 npm run typecheck
 npm test
 npm run build
 node dist/cli.js --help
+```
+
+Useful local commands:
+
+```bash
+node dist/cli.js https://example.com
+node dist/cli.js https://example.com --extract-only
+node dist/cli.js init
 ```
 
 ## Notes
@@ -123,7 +127,6 @@ node dist/cli.js --help
 - Node.js 20+ is required
 - If extraction fails because Chromium is missing, run `npx playwright install chromium`
 - Extraction quality depends on the target site's DOM and CSS exposure
-- Dynamic or protected sites may yield incomplete results
 
 ## License
 
