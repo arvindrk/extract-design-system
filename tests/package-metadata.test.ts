@@ -26,4 +26,8 @@ describe("package metadata", () => {
       typecheck: "tsc --noEmit"
     });
   });
+
+  it("does not depend on itself", () => {
+    expect(pkg.dependencies).not.toHaveProperty("extract-design-system");
+  });
 });

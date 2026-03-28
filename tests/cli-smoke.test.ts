@@ -16,23 +16,23 @@ vi.mock("../src/commands/init.js", () => ({
 import { buildCli } from "../src/cli.js";
 
 describe("cli", () => {
-  it("registers extract and init commands", () => {
+  it("registers init as the only explicit subcommand", () => {
     const cli = buildCli();
-    expect(cli.commands.map((command) => command.name())).toEqual(["extract", "init"]);
+    expect(cli.commands.map((command) => command.name())).toEqual(["init"]);
   });
 
-  it("wires extract options into extractCommand", async () => {
+  it("routes the root command into extractCommand", async () => {
     const cli = buildCli();
 
     await cli.parseAsync(
       [
-        "extract",
         "https://example.com",
         "--dark-mode",
         "--mobile",
         "--slow",
         "--browser",
-        "firefox"
+        "firefox",
+        "--extract-only"
       ],
       { from: "user" }
     );
@@ -41,20 +41,22 @@ describe("cli", () => {
       darkMode: true,
       mobile: true,
       slow: true,
-      browser: "firefox"
+      browser: "firefox",
+      extractOnly: true
     });
   });
 
-  it("uses chromium as the default browser for extract", async () => {
+  it("uses chromium as the default browser for extraction", async () => {
     const cli = buildCli();
 
-    await cli.parseAsync(["extract", "https://example.com"], { from: "user" });
+    await cli.parseAsync(["https://example.com"], { from: "user" });
 
     expect(extractCommandMock).toHaveBeenCalledWith("https://example.com", {
       darkMode: undefined,
       mobile: undefined,
       slow: undefined,
-      browser: "chromium"
+      browser: "chromium",
+      extractOnly: undefined
     });
   });
 

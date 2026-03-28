@@ -90,7 +90,7 @@ describe("extract command", () => {
     ).toBe("Saved 0 palette colors to .extract-design-system/. Fonts detected: none.");
   });
 
-  it("writes raw and normalized output to the extraction directory", async () => {
+  it("writes raw, normalized, and token outputs by default", async () => {
     const raw = {
       colors: {
         primary: "#111111",
@@ -118,22 +118,42 @@ describe("extract command", () => {
     const outputPaths = getOutputPaths(projectRoot);
     const rawJson = JSON.parse(await readFile(outputPaths.rawJson, "utf8"));
     const normalizedJson = JSON.parse(await readFile(outputPaths.normalizedJson, "utf8"));
+    const tokensJson = JSON.parse(await readFile(outputPaths.tokensJson, "utf8"));
+    const tokensCss = await readFile(outputPaths.tokensCss, "utf8");
 
     expect(rawJson).toEqual(raw);
     expect(normalizedJson.source.url).toBe("https://example.com");
     expect(normalizedJson.colors.palette).toEqual(["#111111", "#ffffff"]);
     expect(normalizedJson.typography.bodyFont).toBe("Inter");
+    expect(tokensJson.colors.palette).toEqual(["#111111", "#ffffff"]);
+    expect(tokensCss).toContain("--color-primary: #111111;");
     expect(runDembrandtMock).toHaveBeenCalledWith("https://example.com", {
       mobile: true
     });
-    expect(logInfoMock).toHaveBeenNthCalledWith(
-      1,
+    expect(logInfoMock).toHaveBeenCalledWith(
       "Running dembrandt with args: https://example.com --json-only --mobile"
     );
-    expect(logInfoMock).toHaveBeenNthCalledWith(
-      2,
+    expect(logInfoMock).toHaveBeenCalledWith(
       "Saved 2 palette colors to .extract-design-system/. Fonts detected: Inter."
     );
+    expect(logInfoMock).toHaveBeenCalledWith(`Wrote ${outputPaths.tokensJson}`);
+    expect(logInfoMock).toHaveBeenCalledWith(`Wrote ${outputPaths.tokensCss}`);
+  });
+
+  it("skips token generation when extractOnly is enabled", async () => {
+    buildDembrandtArgsMock.mockReturnValue(["https://example.com", "--json-only"]);
+    runDembrandtMock.mockResolvedValue({
+      colors: {
+        palette: ["#111111"]
+      }
+    });
+
+    await extractCommand("https://example.com", { extractOnly: true }, projectRoot);
+
+    const outputPaths = getOutputPaths(projectRoot);
+    await expect(access(outputPaths.tokensJson)).rejects.toThrow();
+    await expect(access(outputPaths.tokensCss)).rejects.toThrow();
+    expect(runDembrandtMock).toHaveBeenCalledWith("https://example.com", {});
   });
 
   it("propagates dembrandt failures without writing output files", async () => {
