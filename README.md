@@ -92,6 +92,14 @@ The skill is designed to:
 - Dynamic, protected, or highly script-driven sites may yield incomplete output
 - Extraction is useful for initialization, not pixel-perfect reproduction
 
+## Security Considerations
+
+- Target websites are untrusted third-party input and may influence extracted output
+- Generated tokens should be reviewed before being treated as authoritative design decisions
+- The skill is intended for extraction and starter token generation, not automatic broad app rewrites
+- Use only with public websites that you are comfortable fetching and analyzing at runtime
+- Ask for confirmation before applying extracted output to existing app code, styles, or configuration
+
 ## Repository Structure
 
 This repository currently exposes:
