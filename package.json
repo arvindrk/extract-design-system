@@ -1,7 +1,7 @@
 {
   "name": "extract-design-system",
   "version": "0.1.5",
-  "description": "CLI for extracting design primitives from public websites and generating starter token files for the extract-design-system agent skill workflow.",
+  "description": "Agent skill and bundled CLI for extracting design primitives from public websites into starter token files.",
   "type": "module",
   "bin": {
     "extract-design-system": "dist/cli.js"
@@ -47,7 +47,6 @@
     "commander": "^14.0.1",
     "dembrandt": "^0.7.0",
     "execa": "^9.6.0",
-    "extract-design-system": "^0.1.5",
     "zod": "^4.1.11"
   },
   "devDependencies": {
