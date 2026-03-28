@@ -25,7 +25,7 @@ Set expectations:
 
 ```bash
 npx playwright install chromium
-npx extract-design-system extract <url>
+npx extract-design-system <url>
 ```
 
 3. Review `.extract-design-system/normalized.json` and summarize:
@@ -33,19 +33,25 @@ npx extract-design-system extract <url>
 - detected fonts
 - spacing, radius, and shadow scales if present
 
-4. If the user wants starter token files, run:
+4. If the user wants extraction artifacts only, use:
+
+```bash
+npx extract-design-system <url> --extract-only
+```
+
+5. If the user already has `.extract-design-system/normalized.json` and only wants to regenerate starter token files, run:
 
 ```bash
 npx extract-design-system init
 ```
 
-5. Explain the generated outputs:
+6. Explain the generated outputs:
 - `.extract-design-system/raw.json`
 - `.extract-design-system/normalized.json`
 - `design-system/tokens.json`
 - `design-system/tokens.css`
 
-6. Ask before modifying any existing app code, styles, or config files.
+7. Ask before modifying any existing app code, styles, or config files.
 
 ## Safety Boundaries
 
