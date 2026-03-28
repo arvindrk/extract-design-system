@@ -3,6 +3,11 @@ import { normalizeExtraction } from "../normalize/normalize.js";
 import { ensureDir, writeJson } from "../utils/files.js";
 import { logInfo } from "../utils/logger.js";
 import { getOutputPaths } from "../utils/paths.js";
+import { writeDesignSystemFiles } from "./write-design-system.js";
+
+export interface ExtractCommandOptions extends DembrandtOptions {
+  extractOnly?: boolean;
+}
 
 export function assertValidUrl(url: string): void {
   try {
@@ -28,20 +33,25 @@ export function summarizeNormalized(normalized: ReturnType<typeof normalizeExtra
 
 export async function extractCommand(
   url: string,
-  options: DembrandtOptions,
+  options: ExtractCommandOptions,
   projectRoot: string = process.cwd()
 ): Promise<void> {
   assertValidUrl(url);
+  const { extractOnly, ...dembrandtOptions } = options;
 
   const outputPaths = getOutputPaths(projectRoot);
   await ensureDir(outputPaths.extractionDir);
 
-  logInfo(`Running dembrandt with args: ${buildDembrandtArgs(url, options).join(" ")}`);
-  const raw = await runDembrandt(url, options);
+  logInfo(`Running dembrandt with args: ${buildDembrandtArgs(url, dembrandtOptions).join(" ")}`);
+  const raw = await runDembrandt(url, dembrandtOptions);
   const normalized = normalizeExtraction(raw, url);
 
   await writeJson(outputPaths.rawJson, raw);
   await writeJson(outputPaths.normalizedJson, normalized);
 
   logInfo(summarizeNormalized(normalized));
+
+  if (!extractOnly) {
+    await writeDesignSystemFiles(normalized, projectRoot);
+  }
 }

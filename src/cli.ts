@@ -13,24 +13,30 @@ export function buildCli(): Command {
     .description("Extract design primitives from public websites and generate starter token files.");
 
   program
-    .command("extract")
-    .argument("<url>", "Public website URL to extract")
+    .argument("[url]", "Public website URL to extract")
     .option("--dark-mode", "Extract the dark mode variant when available")
     .option("--mobile", "Use a mobile viewport during extraction")
     .option("--slow", "Use slower timeouts for JavaScript-heavy sites")
     .option("--browser <browser>", "Choose dembrandt browser", "chromium")
+    .option("--extract-only", "Only save raw and normalized extraction output")
     .action(async (url, options) => {
+      if (!url) {
+        program.outputHelp();
+        return;
+      }
+
       await extractCommand(url, {
         darkMode: options.darkMode,
         mobile: options.mobile,
         slow: options.slow,
-        browser: options.browser
+        browser: options.browser,
+        extractOnly: options.extractOnly
       });
     });
 
   program
     .command("init")
-    .description("Generate starter token files from the last extraction")
+    .description("Regenerate starter token files from the last normalized extraction")
     .action(async () => {
       await initCommand();
     });
