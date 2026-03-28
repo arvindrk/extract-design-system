@@ -1,5 +1,11 @@
-[![npm](https://img.shields.io/badge/npm-package-CB3837?logo=npm&logoColor=white)](https://www.npmjs.com/package/extract-design-system)
-[![skills.sh](https://img.shields.io/badge/skills.sh-discovery-111111)](https://skills.sh/arvindrk/extract-design-system/extract-design-system)
+<p align="center">
+  <a href="https://www.npmjs.com/package/extract-design-system">
+    <img src="https://img.shields.io/badge/npm-package-CB3837?logo=npm&logoColor=white" alt="npm package" />
+  </a>
+  <a href="https://skills.sh/arvindrk/extract-design-system/extract-design-system">
+    <img src="https://img.shields.io/badge/skills.sh-discovery-111111" alt="skills.sh" />
+  </a>
+</p>
 
 # extract-design-system
 
