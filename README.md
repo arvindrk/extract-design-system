@@ -5,7 +5,7 @@
 
 A collection of agent skill instructions and a companion npm CLI for extracting design primitives from public websites and generating starter token files.
 
-Skills follow Anthropic's [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and are installable through the [skills.sh](https://skills.sh/) ecosystem.
+Skills follow Anthropic's [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and are installable through the [skills.sh](https://skills.sh/arvindrk/extract-design-system/extract-design-system) ecosystem.
 
 Official docs: [quickstart](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/quickstart), [best practices](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/best-practices), [API guide](https://platform.claude.com/docs/en/build-with-claude/skills-guide).
 
