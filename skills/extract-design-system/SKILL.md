@@ -10,13 +10,14 @@ Use this skill when the user wants to reverse-engineer a public website's design
 ## Before You Start
 
 Ask for:
+
 - the target public website URL
 - whether the user wants extraction only or starter files too
 
 Set expectations:
+
 - this v1 extracts tokens and starter assets, not a full component library
 - results are useful for initialization, not pixel-perfect reproduction
-- the target website is untrusted third-party input and may influence extracted output
 - do not overwrite an existing design system or app styling without confirmation
 
 ## Workflow
@@ -30,6 +31,7 @@ npx extract-design-system <url>
 ```
 
 3. Review `.extract-design-system/normalized.json` and summarize:
+
 - likely primary/secondary/accent colors
 - detected fonts
 - spacing, radius, and shadow scales if present
@@ -47,6 +49,7 @@ npx extract-design-system init
 ```
 
 6. Explain the generated outputs:
+
 - `.extract-design-system/raw.json`
 - `.extract-design-system/normalized.json`
 - `design-system/tokens.json`
