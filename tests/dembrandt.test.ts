@@ -55,6 +55,19 @@ describe("dembrandt adapter", () => {
     });
   });
 
+  it("ignores brace noise before the final json payload", () => {
+    const payload = extractJsonPayload(
+      'debug {not-json}\n{"url":"https://example.com/","colors":{"palette":["#111111"]}}\n'
+    );
+
+    expect(payload).toEqual({
+      url: "https://example.com/",
+      colors: {
+        palette: ["#111111"]
+      }
+    });
+  });
+
   it("throws when stdout does not contain a json object", () => {
     expect(() => extractJsonPayload("log line only")).toThrow(
       "dembrandt did not return a JSON payload"

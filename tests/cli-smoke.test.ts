@@ -21,6 +21,16 @@ describe("cli", () => {
     expect(cli.commands.map((command) => command.name())).toEqual(["init"]);
   });
 
+  it("prints help and skips extraction when no url is provided", async () => {
+    const cli = buildCli();
+    const outputHelpSpy = vi.spyOn(cli, "outputHelp").mockImplementation(() => cli);
+
+    await cli.parseAsync([], { from: "user" });
+
+    expect(outputHelpSpy).toHaveBeenCalledTimes(1);
+    expect(extractCommandMock).not.toHaveBeenCalled();
+  });
+
   it("routes the root command into extractCommand", async () => {
     const cli = buildCli();
 

@@ -46,6 +46,13 @@ describe("extract command", () => {
     expect(runDembrandtMock).not.toHaveBeenCalled();
   });
 
+  it("rejects non-http urls before invoking dembrandt", async () => {
+    await expect(extractCommand("ftp://example.com", {}, projectRoot)).rejects.toThrow(
+      "Invalid URL: ftp://example.com"
+    );
+    expect(runDembrandtMock).not.toHaveBeenCalled();
+  });
+
   it("summarizes palette counts and deduplicated fonts", () => {
     expect(
       summarizeNormalized({

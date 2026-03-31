@@ -176,6 +176,46 @@ describe("normalizeExtraction", () => {
     expect(normalized.shadows.scale).toEqual(["0 0 0 transparent"]);
   });
 
+  it("drops blank strings across normalized collections", () => {
+    const normalized = normalizeExtraction(
+      {
+        colors: {
+          palette: ["#111111", "   ", "#111111"],
+          cssVariables: {
+            brand: "#111111",
+            blank: "   "
+          }
+        },
+        typography: {
+          styles: [
+            { family: "  " },
+            { family: "IBM Plex Sans" }
+          ]
+        },
+        spacing: {
+          scale: ["4px", " ", "4px"]
+        },
+        borderRadius: {
+          values: ["6px", "  ", "6px"]
+        },
+        shadows: {
+          values: ["0 1px 2px rgba(0,0,0,0.1)", "   "]
+        }
+      },
+      "https://example.com"
+    );
+
+    expect(normalized.colors.palette).toEqual(["#111111"]);
+    expect(normalized.colors.cssVariables).toEqual({
+      brand: "#111111"
+    });
+    expect(normalized.typography.headingFont).toBe("IBM Plex Sans");
+    expect(normalized.typography.bodyFont).toBe("IBM Plex Sans");
+    expect(normalized.spacing.scale).toEqual(["4px"]);
+    expect(normalized.radius.scale).toEqual(["6px"]);
+    expect(normalized.shadows.scale).toEqual(["0 1px 2px rgba(0,0,0,0.1)"]);
+  });
+
   it("throws when no valid source url can be derived", () => {
     expect(() => normalizeExtraction({}, "not-a-url")).toThrow();
   });
