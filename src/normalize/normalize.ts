@@ -11,12 +11,16 @@ function asRecord(value: unknown): UnknownRecord | undefined {
     : undefined;
 }
 
+function isNonEmptyString(value: unknown): value is string {
+  return typeof value === "string" && Boolean(value.trim());
+}
+
 function asStringArray(value: unknown): string[] {
   if (!Array.isArray(value)) {
     return [];
   }
 
-  return value.filter((item): item is string => typeof item === "string");
+  return value.filter(isNonEmptyString);
 }
 
 function firstString(...values: unknown[]): string | undefined {
@@ -103,7 +107,7 @@ export function normalizeExtraction(
         asStringArray(colors.palette).concat(
           asStringArray(colors.palette).length === 0
             ? Object.values(semanticColors).filter(
-                (value): value is string => typeof value === "string",
+                isNonEmptyString,
               )
             : [],
         ),
@@ -112,7 +116,7 @@ export function normalizeExtraction(
         ? Object.fromEntries(
             Object.entries(colors.cssVariables as UnknownRecord).filter(
               (entry): entry is [string, string] =>
-                typeof entry[1] === "string",
+                isNonEmptyString(entry[1]),
             ),
           )
         : {},
@@ -124,10 +128,7 @@ export function normalizeExtraction(
         typography.headings,
         typographyStyles
           .map((style) => asRecord(style)?.family)
-          .filter(
-            (value): value is string =>
-              typeof value === "string" && Boolean(value.trim()),
-          ),
+          .filter(isNonEmptyString),
       ),
       bodyFont: firstString(
         typography.bodyFont,
@@ -135,10 +136,7 @@ export function normalizeExtraction(
         typography.fonts,
         typographyStyles
           .map((style) => asRecord(style)?.family)
-          .filter(
-            (value): value is string =>
-              typeof value === "string" && Boolean(value.trim()),
-          ),
+          .filter(isNonEmptyString),
       ),
       monoFont: firstString(typography.monoFont, typography.mono),
     },
@@ -147,10 +145,7 @@ export function normalizeExtraction(
         asStringArray(spacing.scale).concat(
           spacingCommonValues
             .map((value) => asRecord(value)?.px)
-            .filter(
-              (value): value is string =>
-                typeof value === "string" && Boolean(value.trim()),
-            ),
+            .filter(isNonEmptyString),
         ),
       ),
     },
@@ -158,8 +153,7 @@ export function normalizeExtraction(
       scale: dedupe(
         asStringArray(borderRadius.radius).concat(
           borderRadiusValues.filter(
-            (value): value is string =>
-              typeof value === "string" && Boolean(value.trim()),
+            isNonEmptyString,
           ),
         ),
       ),
@@ -169,10 +163,7 @@ export function normalizeExtraction(
         asStringArray(shadowValues).concat(
           shadowValues
             .map((value) => asRecord(value)?.value)
-            .filter(
-              (value): value is string =>
-                typeof value === "string" && Boolean(value.trim()),
-            ),
+            .filter(isNonEmptyString),
         ),
       ),
     },
