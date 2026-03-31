@@ -10,9 +10,15 @@ export interface ExtractCommandOptions extends DembrandtOptions {
 }
 
 export function assertValidUrl(url: string): void {
+  let parsedUrl: URL;
+
   try {
-    new URL(url);
+    parsedUrl = new URL(url);
   } catch {
+    throw new Error(`Invalid URL: ${url}`);
+  }
+
+  if (!["http:", "https:"].includes(parsedUrl.protocol)) {
     throw new Error(`Invalid URL: ${url}`);
   }
 }
