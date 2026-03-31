@@ -7,15 +7,72 @@ export interface DembrandtOptions {
   browser?: "chromium" | "firefox";
 }
 
-export function extractJsonPayload(output: string): unknown {
-  const firstBrace = output.indexOf("{");
-  const lastBrace = output.lastIndexOf("}");
+function collectJsonObjectCandidates(output: string): string[] {
+  const candidates: string[] = [];
+  let start = -1;
+  let depth = 0;
+  let inString = false;
+  let isEscaped = false;
 
-  if (firstBrace === -1 || lastBrace === -1 || lastBrace <= firstBrace) {
-    throw new Error("dembrandt did not return a JSON payload");
+  for (let index = 0; index < output.length; index += 1) {
+    const character = output[index];
+
+    if (inString) {
+      if (isEscaped) {
+        isEscaped = false;
+        continue;
+      }
+
+      if (character === "\\") {
+        isEscaped = true;
+        continue;
+      }
+
+      if (character === "\"") {
+        inString = false;
+      }
+
+      continue;
+    }
+
+    if (character === "\"") {
+      inString = true;
+      continue;
+    }
+
+    if (character === "{") {
+      if (depth === 0) {
+        start = index;
+      }
+      depth += 1;
+      continue;
+    }
+
+    if (character === "}" && depth > 0) {
+      depth -= 1;
+
+      if (depth === 0 && start !== -1) {
+        candidates.push(output.slice(start, index + 1));
+        start = -1;
+      }
+    }
   }
 
-  return JSON.parse(output.slice(firstBrace, lastBrace + 1));
+  return candidates;
+}
+
+export function extractJsonPayload(output: string): unknown {
+  const candidates = collectJsonObjectCandidates(output);
+
+  for (let index = candidates.length - 1; index >= 0; index -= 1) {
+    try {
+      return JSON.parse(candidates[index]);
+    } catch {
+      continue;
+    }
+  }
+
+  throw new Error("dembrandt did not return a JSON payload");
 }
 
 export function buildDembrandtArgs(url: string, options: DembrandtOptions = {}): string[] {
