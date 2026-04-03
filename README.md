@@ -5,6 +5,9 @@
   <a href="https://skills.sh/arvindrk/extract-design-system/extract-design-system">
     <img src="https://img.shields.io/badge/skills.sh-discovery-111111" alt="skills.sh" />
   </a>
+  <a href="https://github.com/arvindrk/extract-design-system/actions/workflows/ci.yml">
+    <img src="https://github.com/arvindrk/extract-design-system/actions/workflows/ci.yml/badge.svg" alt="ci" />
+  </a>
 </p>
 
 # extract-design-system
@@ -14,6 +17,27 @@ An agent skill for extracting design primitives from public websites and generat
 Skills follow Anthropic's [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and are installable through the [skills.sh](https://skills.sh/arvindrk/extract-design-system/extract-design-system) ecosystem.
 
 This repository is skills-first. It publishes an installable `extract-design-system` skill, and the bundled CLI is the executable workflow the agent runs under the hood.
+
+## Quick Start
+
+Install the skill:
+
+```bash
+npx skills add arvindrk/extract-design-system
+```
+
+Run it from a supported coding agent with a public website:
+
+```text
+Extract the design system from https://stripe.com and generate starter token files for this project.
+```
+
+Expected starter outputs:
+
+- `.extract-design-system/raw.json`
+- `.extract-design-system/normalized.json`
+- `design-system/tokens.json`
+- `design-system/tokens.css`
 
 ## About This Repository
 
@@ -137,6 +161,12 @@ npm run dev -- https://example.com --extract-only
 npm run cli -- https://example.com
 npm run cli -- init
 ```
+
+## Community And Support
+
+- Read the contribution guide in [`CONTRIBUTING.md`](./CONTRIBUTING.md)
+- Review expected community behavior in [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md)
+- Report security issues using the process in [`SECURITY.md`](./SECURITY.md)
 
 ## Notes
 

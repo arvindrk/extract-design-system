@@ -25,6 +25,25 @@ describe("package metadata", () => {
       test: "vitest run",
       typecheck: "tsc --noEmit"
     });
+    expect(pkg.repository).toEqual({
+      type: "git",
+      url: "git+https://github.com/arvindrk/extract-design-system.git"
+    });
+    expect(pkg.homepage).toBe(
+      "https://github.com/arvindrk/extract-design-system#readme"
+    );
+    expect(pkg.bugs).toEqual({
+      url: "https://github.com/arvindrk/extract-design-system/issues"
+    });
+    expect(pkg.license).toBe("MIT");
+    expect(pkg.keywords).toEqual(
+      expect.arrayContaining([
+        "design-tokens",
+        "token-generator",
+        "css-custom-properties",
+        "website-analysis"
+      ])
+    );
   });
 
   it("does not depend on itself", () => {
