@@ -1,0 +1,39 @@
+name: Bug report
+description: Report a reproducible bug in the package or skill workflow
+title: "[bug] "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened, and what did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Include only public URLs or scrubbed examples.
+      placeholder: |
+        1. Run ...
+        2. Use ...
+        3. Observe ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Node.js version, OS, package version, and anything else relevant.
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Additional context
+      description: Logs, screenshots, or links to related issues.
