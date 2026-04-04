@@ -46,6 +46,10 @@
   "bugs": {
     "url": "https://github.com/arvindrk/extract-design-system/issues"
   },
+  "funding": {
+    "type": "github",
+    "url": "https://github.com/sponsors/arvindrk"
+  },
   "license": "MIT",
   "dependencies": {
     "commander": "^14.0.1",

@@ -35,6 +35,10 @@ describe("package metadata", () => {
     expect(pkg.bugs).toEqual({
       url: "https://github.com/arvindrk/extract-design-system/issues"
     });
+    expect(pkg.funding).toEqual({
+      type: "github",
+      url: "https://github.com/sponsors/arvindrk"
+    });
     expect(pkg.license).toBe("MIT");
     expect(pkg.keywords).toEqual(
       expect.arrayContaining([

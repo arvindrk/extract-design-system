@@ -167,6 +167,7 @@ npm run cli -- init
 - Read the contribution guide in [`CONTRIBUTING.md`](./CONTRIBUTING.md)
 - Review expected community behavior in [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md)
 - Report security issues using the process in [`SECURITY.md`](./SECURITY.md)
+- Support ongoing maintenance through [GitHub Sponsors](https://github.com/sponsors/arvindrk)
 
 ## Notes
 
