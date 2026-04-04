@@ -1,0 +1,6 @@
+{
+  "name": "extract-design-system",
+  "version": "0.1.9",
+  "description": "Extract design primitives from public websites into starter token files.",
+  "skills": "./skills/"
+}

@@ -1,4 +1,5 @@
 import pkg from "../package.json" with { type: "json" };
+import codexPlugin from "../.codex-plugin/plugin.json" with { type: "json" };
 import { describe, expect, it } from "vitest";
 
 describe("package metadata", () => {
@@ -12,6 +13,7 @@ describe("package metadata", () => {
       "extract-design-system": "dist/cli.js"
     });
     expect(pkg.files).toEqual([
+      ".codex-plugin",
       "dist",
       "skills",
       "README.md",
@@ -48,6 +50,15 @@ describe("package metadata", () => {
         "website-analysis"
       ])
     );
+  });
+
+  it("ships a codex plugin manifest aligned with package metadata", () => {
+    expect(codexPlugin).toEqual({
+      name: pkg.name,
+      version: pkg.version,
+      description: "Extract design primitives from public websites into starter token files.",
+      skills: "./skills/"
+    });
   });
 
   it("does not depend on itself", () => {
