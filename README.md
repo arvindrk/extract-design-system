@@ -10,6 +10,8 @@
   </a>
 </p>
 
+[![npm downloads](https://img.shields.io/npm/dw/extract-design-system?logo=npm\&logoColor=white)](https://www.npmjs.com/package/extract-design-system)
+
 # extract-design-system
 
 An agent skill for extracting design primitives from public websites and generating starter token files for the current project.
