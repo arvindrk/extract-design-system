@@ -4,7 +4,8 @@
   "description": "Agent skill and bundled CLI for extracting design primitives from public websites into starter token files.",
   "type": "module",
   "bin": {
-    "extract-design-system": "dist/cli.js"
+    "extract-design-system": "dist/cli.js",
+    "extract-design-system-mcp": "dist/mcp.js"
   },
   "files": [
     ".codex-plugin",
@@ -19,7 +20,7 @@
   "scripts": {
     "dev": "tsx src/cli.ts",
     "cli": "node dist/cli.js",
-    "build": "rm -rf dist && tsc -p tsconfig.build.json && chmod +x dist/cli.js",
+    "build": "rm -rf dist && tsc -p tsconfig.build.json && chmod +x dist/cli.js dist/mcp.js",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:coverage": "vitest run --coverage"
@@ -64,6 +65,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "commander": "^14.0.1",
     "dembrandt": "^0.7.0",
     "execa": "^9.6.0",
