@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "extract-design-system": {
+      "command": "node",
+      "args": ["dist/mcp.js"]
+    }
+  }
+}
