@@ -1,0 +1,5 @@
+{
+  "permissions": {
+    "allow": ["Bash(wc:*)", "Bash(npm test:*)"]
+  }
+}
