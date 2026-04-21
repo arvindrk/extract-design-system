@@ -7,10 +7,11 @@ import { initCommand } from "./commands/init.js";
 import { readJson } from "./utils/files.js";
 import { getOutputPaths } from "./utils/paths.js";
 import type { NormalizedDesignSystem } from "./schemas/normalized.js";
+import pkg from "../package.json" with { type: "json" };
 
 const server = new McpServer({
   name: "extract-design-system",
-  version: "0.1.9",
+  version: pkg.version,
 });
 
 server.tool(
