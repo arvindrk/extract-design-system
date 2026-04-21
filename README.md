@@ -10,13 +10,25 @@
   </a>
 </p>
 
-# extract-design-system
+# extract-design-system — Extract Design Tokens from Any Website
 
-An agent skill for extracting design primitives from public websites and generating starter token files for the current project.
+Reverse-engineer design tokens (colors, typography, spacing, border radius, shadows) from any public website and generate starter JSON and CSS custom properties for your local project. Available as an AI agent skill (Claude, Cursor, Codex) and standalone CLI.
 
 Skills follow Anthropic's [Agent Skills overview](https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview) and are installable through the [skills.sh](https://skills.sh/arvindrk/extract-design-system/extract-design-system) ecosystem.
 
 This repository is skills-first. It publishes an installable `extract-design-system` skill, and the bundled CLI is the executable workflow the agent runs under the hood.
+
+## What It Extracts
+
+| Token category | Examples |
+|---|---|
+| **Colors** | brand palette, backgrounds, text, borders |
+| **Typography** | font families, sizes, weights, line heights |
+| **Spacing** | padding and margin scale |
+| **Border radius** | button, card, and pill radii |
+| **Shadows** | box-shadow values across elevation levels |
+
+Outputs a W3C-compatible `tokens.json` and a `tokens.css` file of CSS custom properties, ready to drop into any project.
 
 ## Quick Start
 
