@@ -139,6 +139,55 @@ This repository currently exposes:
 - `src/` - Bundled CLI implementation used by the skill
 - `tests/` - CLI and normalization test coverage
 
+## MCP Server
+
+The package also ships an MCP server (`extract-design-system-mcp`) that exposes the same workflow as structured tool calls for Cursor, Claude Desktop, and any MCP-compatible agent.
+
+### Tools
+
+| Tool | Description |
+|---|---|
+| `extract_design_system` | Run a full extraction from a URL and write `design-system/tokens.json` + `tokens.css` |
+| `init_design_system` | Re-emit token files from the cached `.extract-design-system/normalized.json` without re-fetching |
+| `get_tokens` | Read and return the current `design-system/tokens.json` without re-extracting |
+
+### Cursor (project-local)
+
+Create `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "extract-design-system": {
+      "command": "npx",
+      "args": ["-y", "extract-design-system-mcp"]
+    }
+  }
+}
+```
+
+Restart Cursor. The server appears under Settings → Features → MCP with all 3 tools listed.
+
+### Claude Desktop
+
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "extract-design-system": {
+      "command": "npx",
+      "args": ["-y", "extract-design-system-mcp"],
+      "cwd": "/path/to/your/project"
+    }
+  }
+}
+```
+
+Claude Desktop does not infer a working directory from context, so `cwd` is required. It controls where `design-system/tokens.json` and `.extract-design-system/` are written.
+
+---
+
 ## Local Development
 
 The skill's executable workflow is backed by the published npm CLI in this repository.
