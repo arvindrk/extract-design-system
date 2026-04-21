@@ -30,7 +30,17 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run build --if-present
-      - run: npm version "${GITHUB_REF_NAME#v}" --no-git-tag-version
+      - name: Bump version
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          npm version "$VERSION" --no-git-tag-version
+          node -e "
+            const fs = require('fs');
+            const p = '.codex-plugin/plugin.json';
+            const plugin = JSON.parse(fs.readFileSync(p, 'utf8'));
+            plugin.version = '$VERSION';
+            fs.writeFileSync(p, JSON.stringify(plugin, null, 2) + '\n');
+          "
       - run: npm pack --dry-run
       - run: npm publish
         env:
@@ -40,6 +50,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
+          git add package.json package-lock.json .codex-plugin/plugin.json
           git commit -m "chore: bump version to ${GITHUB_REF_NAME#v}"
           git push origin HEAD:main
