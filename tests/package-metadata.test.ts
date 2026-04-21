@@ -10,7 +10,8 @@ describe("package metadata", () => {
   it("publishes the expected cli and package surface", () => {
     expect(pkg.type).toBe("module");
     expect(pkg.bin).toEqual({
-      "extract-design-system": "dist/cli.js"
+      "extract-design-system": "dist/cli.js",
+      "extract-design-system-mcp": "dist/mcp.js"
     });
     expect(pkg.files).toEqual([
       ".codex-plugin",
