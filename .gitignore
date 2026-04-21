@@ -6,3 +6,4 @@ docs/
 .extract-design-system/
 design-system/
 *.tgz
+.claude/
