@@ -16,9 +16,9 @@ vi.mock("../src/commands/init.js", () => ({
 import { buildCli } from "../src/cli.js";
 
 describe("cli", () => {
-  it("registers init as the only explicit subcommand", () => {
+  it("registers explicit subcommands", () => {
     const cli = buildCli();
-    expect(cli.commands.map((command) => command.name())).toEqual(["init"]);
+    expect(cli.commands.map((command) => command.name())).toEqual(["init", "audit"]);
   });
 
   it("prints help and skips extraction when no url is provided", async () => {
