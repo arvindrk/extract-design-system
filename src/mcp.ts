@@ -2,6 +2,8 @@
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
+import { auditCommand } from "./commands/audit.js";
+import { formatAuditJson } from "./formatters/audit-report.js";
 import { extractCommand } from "./commands/extract.js";
 import { initCommand } from "./commands/init.js";
 import { readJson } from "./utils/files.js";
@@ -77,6 +79,40 @@ server.tool(
       return {
         isError: true,
         content: [{ type: "text" as const, text: `No tokens found. Run extract_design_system first. Error: ${error instanceof Error ? error.message : String(error)}` }],
+      };
+    }
+  }
+);
+
+server.tool(
+  "audit_design_system",
+  "Scan source files in a directory for hardcoded design values (hex colors, pixel spacing, border-radius, box-shadow, font-family) and suggest the matching CSS variable from design-system/tokens.json. Returns an array of findings with file paths, line numbers, raw values, and suggested token names, plus a coverage summary.",
+  {
+    dir: z.string().optional().describe("Directory to scan (defaults to current working directory)"),
+    threshold: z
+      .number()
+      .optional()
+      .describe("RGB distance threshold for near-match colors (default: 15). 0 = exact only."),
+    onlyUnmatched: z
+      .boolean()
+      .optional()
+      .describe("When true, only return findings with no token suggestion"),
+    extensions: z
+      .array(z.string())
+      .optional()
+      .describe("File extensions to scan, e.g. ['css','tsx']. Defaults to css,scss,less,ts,tsx,js,jsx,vue,svelte,html"),
+  },
+  async ({ dir, threshold, onlyUnmatched, extensions }) => {
+    try {
+      const targetDir = dir ?? process.cwd();
+      const result = await auditCommand(targetDir, { threshold, onlyUnmatched, extensions });
+      return {
+        content: [{ type: "text" as const, text: formatAuditJson(result.findings, result.summary) }],
+      };
+    } catch (error) {
+      return {
+        isError: true,
+        content: [{ type: "text" as const, text: error instanceof Error ? error.message : String(error) }],
       };
     }
   }
