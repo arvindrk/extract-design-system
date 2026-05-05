@@ -1,6 +1,6 @@
 {
   "name": "extract-design-system",
-  "version": "0.1.10",
+  "version": "0.1.11",
   "description": "Extract design tokens (colors, typography, spacing, border radius, shadows) from any public website. Generates JSON and CSS custom properties for local projects. Available as an AI agent skill (Claude, Cursor, Codex) and standalone CLI.",
   "type": "module",
   "bin": {
