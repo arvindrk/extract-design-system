@@ -1,6 +1,6 @@
 import { readFile } from "node:fs/promises";
 import type { NormalizedDesignSystem } from "../schemas/normalized.js";
-import type { AuditFinding, AuditCommandOptions } from "../schemas/audit.js";
+import type { AuditFinding, AuditCommandOptions, AuditSummary } from "../schemas/audit.js";
 import { readJson } from "../utils/files.js";
 import { getOutputPaths } from "../utils/paths.js";
 import { walkFiles, DEFAULT_EXTENSIONS, DEFAULT_SKIP_DIRS } from "../scanners/file-scanner.js";
@@ -15,7 +15,7 @@ export async function auditCommand(
   dir: string,
   options: AuditCommandOptions,
   projectRoot: string = process.cwd()
-): Promise<{ findings: AuditFinding[]; summary: ReturnType<typeof computeSummary> }> {
+): Promise<{ findings: AuditFinding[]; summary: AuditSummary }> {
   const paths = getOutputPaths(projectRoot);
   let tokens: NormalizedDesignSystem;
 
