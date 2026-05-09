@@ -12,6 +12,8 @@ jobs:
     update-pr-description:
         name: Generate PR description
         runs-on: ubuntu-latest
+        env:
+            FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
         if: ${{ !contains(fromJson('["dependabot[bot]", "github-actions[bot]"]'), github.event.pull_request.user.login) }}
 
         steps:
