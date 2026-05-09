@@ -1,0 +1,37 @@
+name: Update PR Description
+
+on:
+    pull_request:
+        types: [opened, synchronize]
+
+permissions:
+    contents: read
+    pull-requests: write
+
+jobs:
+    update-pr-description:
+        name: Generate PR description
+        runs-on: ubuntu-latest
+        env:
+            FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+        if: ${{ !contains(fromJson('["dependabot[bot]", "github-actions[bot]"]'), github.event.pull_request.user.login) }}
+
+        steps:
+            - uses: actions/checkout@v4
+              with:
+                  sparse-checkout: scripts/generate-pr-description.ts
+                  sparse-checkout-cone-mode: false
+
+            - uses: actions/setup-node@v4
+              with:
+                  node-version: "22"
+
+            - name: Generate and update PR description
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GITHUB_REPOSITORY: ${{ github.repository }}
+                  PR_NUMBER: ${{ github.event.pull_request.number }}
+                  PR_TITLE: ${{ github.event.pull_request.title }}
+                  OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+                  PR_DESCRIPTION_MODEL: ${{ vars.PR_DESCRIPTION_MODEL }}
+              run: npx tsx scripts/generate-pr-description.ts
