@@ -71,7 +71,7 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
     "commander": "^14.0.1",
-    "dembrandt": "^0.7.0",
+    "dembrandt": "^0.11.0",
     "execa": "^9.6.0",
     "zod": "^4.1.11"
   },
