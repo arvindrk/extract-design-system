@@ -70,8 +70,8 @@
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "commander": "^14.0.1",
-    "dembrandt": "^0.12.2",
+    "commander": "^15.0.0",
+    "dembrandt": "^0.13.0",
     "execa": "^9.6.0",
     "zod": "^4.1.11"
   },
